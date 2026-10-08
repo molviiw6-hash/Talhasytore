@@ -26,7 +26,7 @@ async function up(f,dir){
 /* ---------- load shared data ---------- */
 async function loadAll(first){
   const {data,error}=await sb.from('items').select('id,kind,data').order('created',{ascending:false}).limit(1000);
-  if(error){alert('Supabase error: '+error.message);LOADED=true;first?render():refresh();return}}
+  if(error){alert('Supabase error: '+error.message);LOADED=true;first?render():refresh();return}
   const P=[],C=[],PR=[],VV=[];
   data.forEach(r=>{const d=r.data||{};
     if(r.kind=='post')P.push({...d,id:sid(r.id.slice(5)),type:d.type=='page'?'page':'post',views:{}});
