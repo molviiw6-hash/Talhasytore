@@ -143,4 +143,307 @@ main{padding:14px;max-width:760px;margin:auto;padding-bottom:100px}
 <a class="letter-c" data-link="https://youtube.com/@codetonic00?si=o-q4uF0XGDxgzVi8"><div class="flip"><div class="front">N</div><div class="back" style="background:#FF0000"><i class="fa-brands fa-youtube"></i></div></div></a>
 <a class="letter-c" data-link="https://wa.me/923120527392"><div class="flip"><div class="front">T</div><div class="back" style="background:#25D366"><i class="fa-brands fa-whatsapp"></i></div></div></a>
 <a class="letter-c" data-link="https://wa.me/923120527392"><div class="flip"><div class="front">A</div><div class="back" style="background:#25D366"><i class="fa-brands fa-whatsapp"></i></div></div></a>
-<a class="letter-c" data-link="mailto:Molviiw6@gmail.com"><div class="flip"><div class="fr
+<a class="letter-c" data-link="mailto:Molviiw6@gmail.com"><div class="flip"><div class="front">C</div><div class="back" style="background:#111"><i class="fa-solid fa-at"></i></div></div></a>
+<a class="letter-c" data-link="https://wa.me/923120527392"><div class="flip"><div class="front">T</div><div class="back" style="background:#25D366"><i class="fa-brands fa-whatsapp"></i></div></div></a></div>
+<div style="margin-top:8px;font-size:9px;color:#aaa">1st Click = Flip, 2nd Click = Open</div>
+<div style="margin-top:15px;text-align:left;background:rgba(255,255,255,.06);padding:12px;border-radius:10px"><h4 style="text-align:center;margin-bottom:8px">About Us - Talha'w</h4><p style="font-size:12px;color:#ddd;line-height:1.6">Main Talha hun. Electrical + APKs store. WhatsApp 03120527392</p></div></div></div></div>
+<div class="viewBtn" id="viewBtn" onclick="openGreen()"><i class="fa-solid fa-cart-shopping"></i> View cart <span id="vC" style="background:#fff;color:#16a34a;padding:2px 7px;border-radius:10px">0</span> ›</div>
+<div class="green" id="green"><div style="display:flex;justify-content:space-between;font-weight:700;font-size:12px"><span>Your Cart <span id="gC" style="background:#fff;color:#16a34a;padding:2px 7px;border-radius:10px">0</span></span><span onclick="closeGreen()" style="cursor:pointer">✕</span></div><div id="gList"></div>
+<div style="display:flex;justify-content:space-between;margin-top:10px;padding-top:8px;border-top:1px solid rgba(255,255,255,.3);font-size:11px"><span>Subtotal</span><b id="gTotal">Rs.0</b></div>
+<button class="gl-green" onclick="order()" style="width:100%;margin-top:10px;background:#fff;color:#166534;border:0;padding:11px;border-radius:12px;font-weight:800">Proceed to Checkout ›</button></div>
+<div class="snav"><div class="nav-ind" id="navInd"></div><div class="nav-dot" id="navDot"></div>
+<div class="ni active" onclick="location.hash='#/home'"><i class="fa-solid fa-house"></i><span>Home</span></div>
+<div class="ni" onclick="location.hash='#/search'"><i class="fa-solid fa-magnifying-glass"></i><span>Search</span></div>
+<div class="ni" onclick="location.hash='#/videos'"><i class="fa-solid fa-play"></i><span>Videos</span></div>
+<div class="ni" id="navCart" onclick="location.hash='#/carts'"><i class="fa-solid fa-cart-shopping"></i><span>Carts (<span id="cCount">0</span>)</span></div>
+<div class="ni" onclick="location.hash='#/payments'"><i class="fa-solid fa-money-bill"></i><span>Pay</span></div></div>
+</div>
+
+<script>
+const q=s=>document.getElementById(s),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const IC={posts:'<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/>',stats:'<path d="M5 20V10M12 20V4M19 20v-7"/>',comments:'<path d="M4 4h16v12H8l-4 4z"/>',earnings:'<path d="M12 3v18M16 7.5C16 6 14.2 5 12 5S8 6 8 8s2 2.6 4 3 4 1 4 3-1.8 3-4 3-4-1-4-2.5"/>',pages:'<rect x="8" y="3" width="13" height="13" rx="2"/><path d="M5 7H4v13h13v-1"/>',layout:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 13h8M8 16h5"/>',theme:'<rect x="4" y="3" width="14" height="6" rx="1"/><path d="M18 6h2v5H11v3M11 14v7"/>',settings:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',reading:'<path d="M6 3h12v18l-6-4-6 4z"/>',menu:'<path d="M4 6h16M4 12h16M4 18h16"/>',plus:'<path d="M12 5v14M5 12h14"/>',eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>',up:'<path d="M6 15l6-6 6 6"/>',down:'<path d="M6 9l6 6 6-6"/>',x:'<path d="M6 6l12 12M18 6L6 18"/>'};
+const ic=n=>`<svg class="i" viewBox="0 0 24 24">${IC[n]}</svg>`;
+const NAV=['posts','stats','comments','earnings','pages','layout','theme','settings','reading'];
+const NM={posts:'Posts',stats:'Stats',comments:'Comments',earnings:'Earnings',pages:'Pages',layout:'Layout',theme:'Theme',settings:'Settings',reading:'Reading List',edit:'Editor'};
+const K='bs1',td=()=>new Date().toISOString().slice(0,10),yd=()=>new Date(Date.now()-864e5).toISOString().slice(0,10);
+const lm=()=>{let[y,m]=td().split('-').map(Number);m--;if(!m){m=12;y--}return y+'-'+String(m).padStart(2,'0')};
+const fmt=d=>new Date(d+'T12:00').toLocaleDateString('en',{month:'short',day:'numeric',year:'numeric'});
+let S;try{S=JSON.parse(localStorage.getItem(K))}catch(e){}
+S=S||{posts:[{id:'w1',type:'post',title:'Welcome to my blog',html:'<p>This is your first post. Edit or delete it from the dashboard.</p>',labels:'general',date:td(),views:{},draft:0}],comments:[],reading:[],set:{title:'My Blog',desc:'',pub:'',auto:false,mod:false,per:7,idx:true},gad:{top:[{n:'About Me',h:'<p>Welcome to my blog.</p>',on:1}],bot:[{n:'Labels',t:'labels',on:1},{n:'Blog Archive',t:'archive',on:1}]},th:{a:'#2bff88',head:''}};
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
+const sum=(p,f)=>Object.entries(p.views||{}).reduce((s,[d,n])=>f(d)?s+n:s,0);
+const tot=f=>S.posts.reduce((s,p)=>s+sum(p,f),0);
+const cc=id=>S.comments.filter(c=>c.pid==id).length;
+const dl=(n,t)=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t]));a.download=n;a.click()};
+const strip=h=>new DOMParser().parseFromString(h,'text/html').body.textContent;
+const run=el=>el.querySelectorAll('script').forEach(o=>{const s=document.createElement('script');[...o.attributes].forEach(a=>s.setAttribute(a.name,a.value));s.text=o.text;o.replaceWith(s)});
+const inj=h=>{const d=document.createElement('div');d.innerHTML=h;run(d);[...d.childNodes].forEach(n=>document.head.append(n))};
+const sw=(c,h)=>`<label class="sw"><input type="checkbox" ${c?'checked':''} onchange="${h}"><i></i></label>`;
+const st=(l,s,c)=>`<div class="st"><div><b>${l}</b><small>${s}</small></div>${c}</div>`;
+let F='all',CF='all',SR=7,M=0,E,injd=0;const VW={};
+document.documentElement.style.setProperty('--a',S.th.a);
+
+/* ---------- VIEWS ---------- */
+const V={};
+V.posts=(a,t='post')=>{const A=S.posts.filter(p=>p.type==t),L=A.filter(p=>F=='all'||(F=='draft')==!!p.draft);
+return `<div class="row"><select class="in" style="width:auto;margin:0" onchange="F=this.value;render()">${[['all','All'],['pub','Published'],['draft','Drafts']].map(o=>`<option value="${o[0]}" ${F==o[0]?'selected':''}>${o[1]} (${o[0]=='all'?A.length:A.filter(p=>(o[0]=='draft')==!!p.draft).length})</option>`).join('')}</select></div>`+
+(L.map(p=>`<div class="card pc" onclick="location.hash='#/edit/${p.id}'"><div class="th">${esc((p.title||'?')[0])}</div><div class="pi"><b>${esc(p.title||'Untitled')}</b><small>${fmt(p.date)}${p.draft?' (draft)':''}</small><small>${t=='post'?ic('comments')+' '+cc(p.id)+' &nbsp; '+ic('stats')+' '+sum(p,()=>1):''}</small></div><button class="ib" onclick="event.stopPropagation();del('${p.id}')">${ic('trash')}</button></div>`).join('')||`<p class="mu" style="text-align:center;padding:40px 0">No ${t}s yet. Tap + to create one.</p>`)+
+`<button class="fab" onclick="location.hash='#/edit/new-${t}'">${ic('plus')}</button>`};
+V.pages=()=>V.posts(0,'page');
+
+V.edit=a=>{M=0;E=S.posts.find(x=>x.id==a)||{id:'',type:a=='new-page'?'page':'post',title:'',html:'',labels:'',draft:1,views:{}};
+const B=[['B','bold'],['I','italic'],['U','underline'],['H','formatBlock','h2'],['List','insertUnorderedList'],['Quote','formatBlock','blockquote'],['Link','link']];
+return `<input id="ti" class="in big" placeholder="Title" value="${esc(E.title)}">
+<div class="row"><button class="chip on" id="bc" onclick="mode(0)">Compose</button><button class="chip" id="bh" onclick="mode(1)">HTML</button><span class="sp"></span><button class="chip" onclick="sv(1)">Save draft</button><button class="btn" onclick="sv(0)">Publish</button></div>
+<div class="tb" id="tb">${B.map(b=>`<button onmousedown="event.preventDefault()" onclick="fx('${b[1]}','${b[2]||''}')">${b[0]}</button>`).join('')}</div>
+<div id="ed" class="ed" contenteditable="true" oninput="live()">${E.html}</div><textarea id="hx" class="in" rows="14" hidden spellcheck="false" placeholder="Paste HTML or ad code here"></textarea><small id="lh">Live HTML (auto)</small><pre id="lv" class="lv"></pre>
+<input id="lb" class="in" placeholder="Labels, separated by commas" value="${esc(E.labels)}">
+${E.id?`<a href="#/p/${E.id}">Preview</a>`:''}`};
+const nz=h=>{const b=new DOMParser().parseFromString('<body>'+h,'text/html').body,B=/^(P|DIV|H[1-6]|UL|OL|BLOCKQUOTE|PRE|TABLE|HR|FIGURE|SCRIPT|STYLE|IFRAME|INS)$/;let o='',c='';
+const fl=()=>{if(c.replace(/<br\s*\/?>/g,'').trim())o+='<p>'+c.trim()+'</p>\n';c=''};
+b.childNodes.forEach(n=>{if(n.nodeType==3)c+=esc(n.textContent);else if(n.tagName=='BR')fl();else if(!B.test(n.tagName))c+=n.outerHTML;else{fl();if(n.tagName=='DIV'&&!n.querySelector('p,div,ul,ol,h1,h2,h3,blockquote,pre,table,script,ins,iframe')){const i=n.innerHTML;if(i.replace(/<br\s*\/?>/g,'').trim())o+='<p>'+i.trim()+'</p>\n'}else o+=n.outerHTML+'\n'}});fl();return o.trim()};
+window.live=()=>{const e=q('ed'),l=q('lv');if(e&&l)l.textContent=nz(e.innerHTML)};
+window.fx=(c,v)=>{if(c=='link'){const u=prompt('Link URL');if(u)document.execCommand('createLink',false,u)}else document.execCommand(c,false,v||null)};
+window.mode=m=>{if(m==M)return;M=m;if(m)q('hx').value=nz(q('ed').innerHTML);else{q('ed').innerHTML=q('hx').value;live()}q('ed').hidden=!!m;q('lv').hidden=q('lh').hidden=!!m;q('hx').hidden=!m;q('tb').hidden=!!m;q('bc').classList.toggle('on',!m);q('bh').classList.toggle('on',!!m)};
+window.sv=d=>{const t=q('ti').value.trim();if(!t)return alert('Add a title first');const h=M?q('hx').value:nz(q('ed').innerHTML);
+if(!E.id){E.id=Date.now().toString(36);E.date=td();E.views={};S.posts.unshift(E)}
+Object.assign(E,{title:t,html:h,labels:q('lb').value,draft:d?1:0});save();location.hash=E.type=='page'?'#/pages':'#/posts'};
+window.del=id=>{if(!confirm('Delete this?'))return;S.posts=S.posts.filter(p=>p.id!=id);S.comments=S.comments.filter(c=>c.pid!=id);save();render()};
+
+V.stats=()=>{const P=S.posts.filter(p=>p.type=='post'),m=td().slice(0,7);
+const R=[['All Time',()=>1],['Today',d=>d==td()],['Yesterday',d=>d==yd()],['This Month',d=>d.startsWith(m)],['Last Month',d=>d.startsWith(lm())]];
+const cut=SR?new Date(Date.now()-SR*864e5).toISOString().slice(0,10):'',inR=d=>d>=cut;
+const days=[...Array(7)].map((_,i)=>{const d=new Date(Date.now()-(6-i)*864e5).toISOString().slice(0,10);return[d.slice(8),P.reduce((s,p)=>s+((p.views||{})[d]||0),0)]}),mx=Math.max(1,...days.map(x=>x[1]));
+return `<div class="card"><div class="row"><div><div class="num">${P.length}</div><small>posts</small></div><span class="sp"></span><div><div class="num">${S.comments.length}</div><small>comments</small></div><span class="sp"></span><div><div class="num">${S.posts.length-P.length}</div><small>pages</small></div></div></div>
+<div class="card">${R.map(r=>`<div class="st"><span class="mu">${r[0]}</span><b>${tot(r[1])}</b></div>`).join('')}</div>
+<div class="card"><small>Views, last 7 days</small><div class="bars" style="margin-top:10px">${days.map(d=>`<div><small>${d[1]}</small><i style="height:${d[1]/mx*80}%"></i><small>${d[0]}</small></div>`).join('')}</div></div>
+<div class="row"><select class="in" style="width:auto;margin:0" onchange="SR=+this.value;render()">${[[7,'Last 7 days'],[30,'Last 30 days'],[0,'All time']].map(o=>`<option value="${o[0]}" ${SR==o[0]?'selected':''}>${o[1]}</option>`).join('')}</select><span class="sp"></span><button class="chip" onclick="render()">Refresh</button></div>
+<div class="card"><b>Posts</b>${[...P].sort((a,b)=>sum(b,inR)-sum(a,inR)).map(p=>`<div class="st"><a href="#/p/${p.id}">${esc(p.title)}</a><b>${sum(p,inR)}</b></div>`).join('')||'<p class="mu">There\'s no data to show.</p>'}</div>`};
+
+V.comments=()=>{const L=S.comments.filter(c=>CF=='all'||!c.ok),pn=S.comments.filter(c=>!c.ok).length;
+return `<div class="row"><select class="in" style="width:auto;margin:0" onchange="CF=this.value;render()"><option value="all" ${CF=='all'?'selected':''}>All (${S.comments.length})</option><option value="pend" ${CF!='all'?'selected':''}>Pending (${pn})</option></select></div>`+
+(L.map(c=>{const p=S.posts.find(x=>x.id==c.pid);return `<div class="card"><div class="row"><div class="th s">${esc((c.name||'?')[0])}</div><div><b>${esc(c.name)}</b> <small>commented on</small> <a href="#/p/${c.pid}">${esc(p?p.title:'deleted post')}</a><br><small>${fmt(c.date)}</small></div></div><p>${esc(c.text)}</p><div class="row">${c.ok?'':`<button class="btn" onclick="cap('${c.id}')">Approve</button>`}<button class="chip" onclick="cdel('${c.id}')">Delete</button></div></div>`}).join('')||'<p class="mu" style="text-align:center;padding:40px 0">No comments yet.</p>')};
+window.cap=id=>{S.comments.find(c=>c.id==id).ok=1;save();render()};
+window.cdel=id=>{S.comments=S.comments.filter(c=>c.id!=id);save();render()};
+
+V.earnings=()=>{const p=S.set.pub.trim(),ok=!!p;
+return `<div class="card"><small>Publisher ID: ${esc(p||'not set')}</small><h3>${ok?'AdSense is set up':'AdSense is not connected'}</h3><p class="mu">${ok?'Ads can load on your public pages once AdSense approves this site.':'Enter your publisher ID to start showing ads.'}</p></div>
+<div class="card"><input class="in" placeholder="pub-0000000000000000" value="${esc(p)}" onchange="S.set.pub=this.value.trim();save();render()">
+${st('Auto ads','Adds the AdSense script to public pages',sw(S.set.auto,"S.set.auto=this.checked;save()"))}
+<p class="mu" style="margin:10px 0">For manual ads, paste your ad code in the HTML view of a post, or in an HTML gadget in Layout.</p>
+<div class="row"><button class="chip" onclick="dl('ads.txt','google.com, '+(S.set.pub.replace(/^ca-/,'')||'pub-XXXX')+', DIRECT, f08c47fec0942fa0')">Download ads.txt</button>${ok?`<button class="btn" style="background:#ff5722;color:#fff" onclick="if(confirm('Remove AdSense?')){S.set.pub='';S.set.auto=false;save();render()}">REMOVE ADSENSE</button>`:''}</div></div>`};
+
+V.layout=()=>['top','bot'].map(k=>`<div class="card"><b>Sidebar (${k=='top'?'Top':'Bottom'})</b><button class="dash" style="margin-top:12px" onclick="ga('${k}')">+ Add a Gadget</button>${S.gad[k].map((g,i)=>`<div class="card" style="background:var(--c2);margin-bottom:10px"><div class="row" style="margin:0"><button class="ib" onclick="gt('${k}',${i})" style="color:${g.on?'var(--a)':'var(--m)'}">${ic('eye')}</button><div class="sp"><b>${esc(g.n)}</b><br><small>${g.t?g.t+' gadget':'HTML gadget'}</small></div><button class="ib" onclick="gm('${k}',${i},-1)">${ic('up')}</button><button class="ib" onclick="gm('${k}',${i},1)">${ic('down')}</button><button class="ib" onclick="gd('${k}',${i})">${ic('trash')}</button></div></div>`).join('')}</div>`).join('');
+window.gt=(k,i)=>{S.gad[k][i].on=S.gad[k][i].on?0:1;save();render()};
+window.gd=(k,i)=>{S.gad[k].splice(i,1);save();render()};
+window.gm=(k,i,d)=>{const L=S.gad[k],j=i+d;if(j<0||j>=L.length)return;[L[i],L[j]]=[L[j],L[i]];save();render()};
+window.ga=k=>{const n=prompt('Gadget name');if(!n)return;const h=prompt('HTML (ad code, text, widget)')||'';S.gad[k].unshift({n,h,on:1});save();render()};
+
+V.theme=()=>`<div class="card"><small>My Theme</small><h3>Custom (modified)</h3></div>
+<div class="card"><b>Accent color</b><div class="row" style="margin-top:10px">${['#2bff88','#4dabff','#ff5c8a','#ffb020','#b388ff'].map(c=>`<button class="chip ${S.th.a==c?'on':''}" style="background:${c};width:38px;height:38px;padding:0" onclick="S.th.a='${c}';save();document.documentElement.style.setProperty('--a','${c}');render()"></button>`).join('')}</div></div>
+<div class="card"><b>Edit HTML</b><p class="mu">Code added to the head of your public pages (ads, analytics, fonts).</p><textarea class="in" rows="8" spellcheck="false" onchange="S.th.head=this.value;save()">${esc(S.th.head)}</textarea></div>
+<div class="card"><div class="row"><button class="chip" onclick="dl('blog-backup.json',JSON.stringify(S))">Backup</button><label class="chip">Restore<input type="file" hidden accept=".json" onchange="rs(this.files[0])"></label></div></div>`;
+window.rs=f=>{if(!f)return;const r=new FileReader();r.onload=()=>{try{S=JSON.parse(r.result);save();location.reload()}catch(e){alert('Not a valid backup file')}};r.readAsText(f)};
+
+V.settings=()=>`<div class="card"><b>Basic</b><input class="in" style="margin-top:10px" placeholder="Title" value="${esc(S.set.title)}" onchange="S.set.title=this.value;save()"><input class="in" placeholder="Description" value="${esc(S.set.desc)}" onchange="S.set.desc=this.value;save()"></div>
+<div class="card"><b>Privacy</b>${st('Visible to search engines','Allow search engines to find your blog',sw(S.set.idx,"S.set.idx=this.checked;save()"))}</div>
+<div class="card"><b>Posts</b>${st('Max posts on main page','',`<input class="in" type="number" min="1" max="50" style="width:80px;margin:0" value="${S.set.per}" onchange="S.set.per=+this.value||7;save()">`)}</div>
+<div class="card"><b>Comments</b>${st('Comment moderation','Approve comments before they appear',sw(S.set.mod,"S.set.mod=this.checked;save()"))}</div>
+<div class="card"><b>Manage blog</b><div class="row" style="margin-top:10px"><button class="chip" onclick="dl('blog-backup.json',JSON.stringify(S))">Back up content</button><button class="chip" style="color:#ff6b6b" onclick="if(confirm('Remove everything?')){localStorage.removeItem(K);location.reload()}">Remove your blog</button></div></div>`;
+
+V.reading=()=>{const L=S.reading.map(id=>S.posts.find(p=>p.id==id)).filter(Boolean);
+return L.map(p=>`<div class="card pc" onclick="location.hash='#/p/${p.id}'"><div class="th">${esc((p.title||'?')[0])}</div><div class="pi"><b>${esc(p.title)}</b><small>${fmt(p.date)}</small></div><button class="ib" onclick="event.stopPropagation();rl('${p.id}')">${ic('x')}</button></div>`).join('')||'<p class="mu" style="text-align:center;padding:40px 0">Your reading list is empty. Tap Save on any post.</p>'};
+window.rl=id=>{const i=S.reading.indexOf(id);i<0?S.reading.push(id):S.reading.splice(i,1);save();render()};
+
+/* ---------- PUBLIC BLOG ---------- */
+const labs=()=>[...new Set(S.posts.filter(p=>!p.draft).flatMap(p=>(p.labels||'').split(',').map(x=>x.trim()).filter(Boolean)))];
+const arch=()=>{const o={};S.posts.filter(p=>p.type=='post'&&!p.draft).forEach(p=>o[p.date.slice(0,7)]=(o[p.date.slice(0,7)]||0)+1);return Object.entries(o).map(([k,n])=>`<div>${k} (${n})</div>`).join('')};
+const side=()=>['top','bot'].map(k=>S.gad[k].filter(g=>g.on).map(g=>`<div class="card"><b>${esc(g.n)}</b><div>${g.t=='labels'?labs().map(l=>`<a class="chip" href="#/blog/${encodeURIComponent(l)}">${esc(l)}</a>`).join(''):g.t=='archive'?arch():g.h||''}</div></div>`).join('')).join('');
+const pw=x=>`<div class="pb"><a class="adm" href="#/posts">Dashboard</a><h2><a href="#/blog" style="color:var(--t)">${esc(S.set.title)}</a></h2><p class="mu">${esc(S.set.desc)}</p><div style="margin:10px 0">${S.posts.filter(p=>p.type=='page'&&!p.draft).map(p=>`<a class="chip" href="#/p/${p.id}">${esc(p.title)}</a>`).join('')}</div>${x}${side()}</div>`;
+V.blog=l=>{l=l?decodeURIComponent(l):'';return pw(S.posts.filter(p=>p.type=='post'&&!p.draft&&(!l||(p.labels||'').split(',').map(x=>x.trim()).includes(l))).slice(0,S.set.per).map(p=>`<article class="card"><h3><a href="#/p/${p.id}">${esc(p.title)}</a></h3><small>${fmt(p.date)}</small><p>${esc(strip(p.html).slice(0,160))}</p></article>`).join('')||'<p class="mu">No posts yet.</p>')};
+V.p=a=>{const p=S.posts.find(x=>x.id==a);if(!p)return pw('<p>Post not found.</p>');
+if(!VW[a]){VW[a]=1;p.views=p.views||{};p.views[td()]=(p.views[td()]||0)+1;save()}
+const C=S.comments.filter(c=>c.pid==a&&c.ok),sv=S.reading.includes(a);
+return pw(`<article class="card"><h2>${esc(p.title)}</h2><small>${fmt(p.date)}${p.type=='post'?' | '+sum(p,()=>1)+' views':''}</small><div style="margin-top:12px">${p.html}</div>${p.type=='post'?`<div class="row" style="margin-top:14px"><button class="chip ${sv?'on':''}" onclick="rl('${a}')">${sv?'Saved':'Save to reading list'}</button></div>`:''}</article>`+
+(p.type=='post'?`<div class="card"><b>Comments (${C.length})</b>${C.map(c=>`<div class="st"><div><b>${esc(c.name)}</b><small>${esc(c.text)}</small></div></div>`).join('')}<input id="cn" class="in" style="margin-top:12px" placeholder="Your name"><textarea id="ct" class="in" rows="3" placeholder="Write a comment"></textarea><button class="btn" onclick="pc('${a}')">Post comment</button></div>`:''))};
+window.pc=id=>{const n=q('cn').value.trim(),t=q('ct').value.trim();if(!n||!t)return alert('Add your name and comment');S.comments.unshift({id:Date.now().toString(36),pid:id,name:n,text:t,date:td(),ok:S.set.mod?0:1});save();if(S.set.mod)alert('Thanks! Your comment will appear after approval.');render()};
+
+/* ---------- ROUTER ---------- */
+/* ---------- STORE ---------- */
+const ST=['home','search','videos','carts','payments'];
+const PH='data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150"><rect width="150" height="150" fill="#555"/></svg>');
+let prods=[{id:1,n:"LED Bulb 12W",c:"electrical",p:350,img:PH},{id:2,n:"Fast Charger",c:"electrical",p:850,img:PH},{id:3,n:"CapCut Pro APK",c:"apk",p:0,img:PH}].reverse();
+let vids=[{t:"CodeTonic Channel",l:"https://youtube.com/@codetonic00?si=o-q4uF0XGDxgzVi8"}],cart=[],cf='all';
+const hb=()=>{const L=S.posts.filter(p=>p.type=='post'&&!p.draft).slice(0,3);return L.length?'<h3 style="margin:14px 0 6px">Latest posts</h3>'+L.map(p=>`<a class="pcard" style="color:#fff" href="#/p/${p.id}"><div><b>${esc(p.title)}</b><br><small>${fmt(p.date)}</small></div></a>`).join(''):''};
+function show(list,id){let h="";list.forEach(o=>{const a=cart.find(x=>x.id==o.id);
+h+=`<div class="pcard ${a?'active':''}"><img src="${o.img}" id="img-${id}-${o.id}"><div style="flex:1"><b>${o.n}</b><br><small>${o.c}</small><br><b style="color:#ff6b6b">Rs.${o.p}</b><br><button class="pbtn ${a?'done':''}" onclick="add(${o.id},'${id}')">${a?'✓ Added':'Add to Cart'}</button></div></div>`});
+if(!list.length)h=`<div style="text-align:center;padding:20px;color:#aaa">Kuch nahi mila, dusra lafz try karo</div>`;
+if(id=='homeP')h+=hb();document.getElementById(id).innerHTML=h}
+function showV(){q('vList').innerHTML=vids.map(v=>`<div class="pcard" onclick="window.open('${v.l}','_blank')"><img src="${PH}"><div><b>${v.t}</b><br><small>Open YouTube</small></div></div>`).join('')}
+function moveInd(i){q('navInd').style.transform=q('navDot').style.transform='translateX('+(i*100)+'%)'}
+function setBar(box,open){if(!box)return;box.querySelectorAll('.stage,.sbar').forEach(x=>x.classList.toggle('open',open));box.classList.toggle('shut',!open);if(!open&&document.activeElement)document.activeElement.blur()}
+document.addEventListener('click',e=>{const bar=e.target.closest('.sbar');if(!bar)return;const box=bar.closest('.sbx'),isOpen=bar.classList.contains('open'),r=bar.getBoundingClientRect();
+if(!isOpen){setBar(box,true);if(bar.id=='sbar')setTimeout(()=>q('sInput').focus(),400)}else if(bar.classList.contains('tbar')||e.clientX>r.right-60)setBar(box,false)});
+function tab(id){const i=ST.indexOf(id);document.querySelectorAll('.sbx').forEach(b=>b.classList.remove('active'));q(id).classList.add('active');document.querySelectorAll('.ni').forEach((n,j)=>n.classList.toggle('active',j==i));moveInd(i);closeGreen();if(id=='home')show(prods,'homeP');const sb=q('search');setBar(sb,false);if(id=='search')setTimeout(()=>setBar(sb,true),250)}
+function fil(c,btn){cf=c;document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');searchNow()}
+function lev(a,b){let m=[],i,j;for(i=0;i<=b.length;i++)m[i]=[i];for(j=0;j<=a.length;j++)m[0][j]=j;for(i=1;i<=b.length;i++)for(j=1;j<=a.length;j++)m[i][j]=b.charAt(i-1)==a.charAt(j-1)?m[i-1][j-1]:Math.min(m[i-1][j-1]+1,m[i][j-1]+1,m[i-1][j]+1);return m[b.length][a.length]}
+function searchNow(){const t=q('sInput').value.toLowerCase().trim(),hint=q('searchHint');if(!t){hint.innerText="";show(prods,'searchP');return}
+let f=prods.filter(x=>{if(cf!='all'&&x.c!=cf)return false;const n=x.n.toLowerCase();if(n.includes(t))return true;for(const w of n.split(" ")){if(w.includes(t)||t.includes(w)||lev(w,t)<=2)return true}return lev(n,t)<=3});
+if(!f.length){let best=null,bs=999;prods.forEach(x=>{if(cf!='all'&&x.c!=cf)return;const sc=lev(x.n.toLowerCase(),t);if(sc<bs){bs=sc;best=x}});
+if(best&&bs<5){f=[best];hint.innerText=`Auto-correct: "${t}" → "${best.n}" dikhaya ja raha hai`}else hint.innerText=`"${t}" ka koi result nahi`}
+else hint.innerText=f[0].n.toLowerCase()!=t&&t.length>2?`Showing result for "${f[0].n}" (aap ne "${t}" likha)`:`${f.length} result mile`;
+show(f,'searchP')}
+function add(id,from){if(cart.find(x=>x.id==id))return;const p=prods.find(x=>x.id==id),im=q(`img-${from}-${id}`);
+if(im){const fl=document.createElement('img');fl.src=im.src;fl.className='fly';const r=im.getBoundingClientRect();fl.style.left=r.left+'px';fl.style.top=r.top+'px';document.body.appendChild(fl);
+setTimeout(()=>{const c=q('navCart').getBoundingClientRect();fl.style.left=(c.left+15)+'px';fl.style.top=(c.top+5)+'px';fl.style.width=fl.style.height='20px';fl.style.opacity='0'},50);setTimeout(()=>fl.remove(),850)}
+cart.push(p);updateAll()}
+function updateAll(){q('cCount').innerText=q('vC').innerText=q('gC').innerText=cart.length;q('viewBtn').classList.toggle('show',cart.length>0);renderCart();renderGreen();show(prods,'homeP');searchNow()}
+function renderCart(){if(!cart.length){q('cartBox').innerHTML='Cart khali hai - Home se Add karo';return}let t=0;q('cartBox').innerHTML=cart.map(c=>{t+=c.p;return `<div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.15);padding:8px 0"><span>${c.n}</span><span>Rs.${c.p}</span></div>`}).join('')+`<b>Total: Rs.${t}</b>`}
+function renderGreen(){let t=0;q('gList').innerHTML=cart.map(c=>{t+=c.p;return `<div class="cart-item" id="item-${c.id}"><div style="width:32px;height:32px;background:#fff;border-radius:7px;overflow:hidden"><img src="${c.img}" style="width:100%;height:100%;object-fit:cover"></div><div style="flex:1"><div style="font-size:11px;font-weight:700">${c.n}</div><div style="font-size:10px">Rs.${c.p}</div></div>
+<button class="delete-btn" id="deleteBtn-${c.id}" onclick="deleteAnim(${c.id})"><div class="trash-wrapper" id="trashWrapper-${c.id}"><div class="liquid" id="liquid-${c.id}"></div><svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2M10 11v6M14 11v6M5 6l1 14a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1l1-14"/></svg></div><div class="text-wrapper" id="textWrapper-${c.id}">${[...'Delete'].map(l=>`<span class="letter-d">${l}</span>`).join('')}</div></button></div>`}).join('');q('gTotal').innerText='Rs.'+t}
+async function deleteAnim(id){const btn=q(`deleteBtn-${id}`);if(!btn||btn.classList.contains('shrink'))return;const tr=q(`trashWrapper-${id}`),lq=q(`liquid-${id}`),tw=q(`textWrapper-${id}`),L=tw.querySelectorAll('.letter-d'),T=tr.getBoundingClientRect();
+for(let i=0;i<L.length;i++){const r=L[i].getBoundingClientRect();L[i].style.setProperty('--dx',(T.left+T.width/2)-(r.left+r.width/2)+'px');L[i].style.setProperty('--dy',(T.top+T.height/2)-(r.top+r.height/2)+'px');L[i].classList.add('flying');
+setTimeout(()=>{lq.style.height=(i+1)*18+'%';tr.classList.add('impact');setTimeout(()=>tr.classList.remove('impact'),200)},220);await new Promise(r=>setTimeout(r,110))}
+await new Promise(r=>setTimeout(r,280));tw.style.display='none';btn.classList.add('shrink');
+setTimeout(()=>{cart=cart.filter(x=>x.id!=id);const row=q(`item-${id}`);if(row){row.style.transform='translateX(120%)';row.style.opacity='0'}setTimeout(()=>{updateAll();if(!cart.length)closeGreen()},380)},650)}
+function openGreen(){q('green').classList.add('show');q('viewBtn').classList.remove('show')}
+function closeGreen(){q('green').classList.remove('show');if(cart.length)q('viewBtn').classList.add('show')}
+function selPay(el){document.querySelectorAll('.pay').forEach(e=>e.classList.remove('sel'));el.classList.add('sel')}
+function order(){if(!cart.length){alert("Cart khali hai");return}const m=document.querySelector('.pay.sel').innerText,txt=`Order:\n${cart.map(c=>c.n+' Rs.'+c.p).join('\n')}\n${m}\nFrom Talha'w`;window.open(`https://wa.me/923120527392?text=${encodeURIComponent(txt)}`,'_blank')}
+document.querySelectorAll('.letter-c').forEach(el=>el.addEventListener('click',function(e){if(!this.classList.contains('flipped')){e.preventDefault();this.classList.add('flipped')}else{const l=this.getAttribute('data-link');if(l&&l!="#")window.open(l,'_blank')}}));
+(function(){const SEL='#store button:not(.delete-btn),#store .pay,#store .viewBtn';
+function prep(){document.querySelectorAll(SEL).forEach(b=>{if(b.classList.contains('gl-on'))return;b.classList.add('gl-on');for(let i=0;i<4;i++)b.insertAdjacentHTML('afterbegin','<span class="gl"></span>')})}
+new MutationObserver(prep).observe(document.body,{childList:true,subtree:true});
+document.addEventListener('click',e=>{const b=e.target.closest('.gl-on');if(!b)return;b.classList.add('clicked');setTimeout(()=>b.classList.remove('clicked'),700)});prep()})();
+show(prods,'searchP');showV();
+
+const nv=q('nv');nv.innerHTML=NAV.map((n,i)=>`<span data-n="${n}" title="${NM[n]}" style="--i:${i};--x:${i%3-1};--y:${Math.floor(i/3)-1}">${ic(n)}</span>`).join('');
+q('vw').innerHTML=ic('eye');q('np').innerHTML=ic('plus');
+const opn=b=>{nv.classList.toggle('active',b);document.body.classList.toggle('mo',b)};
+nv.onclick=e=>{e.stopPropagation();const s=e.target.closest('span');if(!nv.classList.contains('active')){opn(1);return}
+if(s){s.classList.add('glow');setTimeout(()=>s.classList.remove('glow'),600);location.hash='#/'+s.dataset.n;setTimeout(()=>opn(0),650)}else opn(0)};
+document.addEventListener('click',()=>opn(0));
+V.home=()=>'';
+function render(){const[r,a]=(location.hash.slice(2)||'home').split('/'),pub=r=='blog'||r=='p';document.body.classList.toggle('pub',pub);document.title="Talha'w";
+const stv=ST.includes(r);document.body.classList.toggle('st',stv);q('ttl').textContent=stv?"Talha'w":(NM[r]||'Posts');document.body.classList.toggle('home',stv);
+if(pub&&!injd){injd=1;if(S.th.head)inj(S.th.head);if(S.set.auto&&S.set.pub)inj(`<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-${S.set.pub.replace(/^ca-/,'')}" crossorigin="anonymous"><\/script>`)}
+q('m').innerHTML=stv?'':(V[r]||V.posts)(a);if(stv)tab(r);if(pub)run(q('m'));if(r=='edit'){document.execCommand('defaultParagraphSeparator',false,'p');live()}window.scrollTo(0,0)}
+addEventListener('hashchange',render);render();
+</script><style>
+/* BUG FIX: .st class body pe lag rahi thi */
+body.st{display:block;padding:72px 0 0;border:0;justify-content:initial;align-items:initial;gap:0}
+/* Posts dashboard */
+.g-card{position:relative}.g-card.op{z-index:20}
+.g-b{font-size:11px;padding:1px 8px;border-radius:10px;background:rgba(43,255,136,.22);margin-left:6px}.g-b.d{background:var(--c2)}
+.g-lb{font-size:11px;padding:1px 8px;border-radius:10px;background:rgba(77,171,255,.3);margin-left:4px}
+.g-mw{position:relative;flex:none}.g-mw .ib{font-size:22px;width:38px;height:38px;justify-content:center;align-items:center;border-radius:50%}.g-mw .ib:hover{background:var(--c2)}
+.g-menu{position:absolute;right:0;top:100%;min-width:180px;display:none;z-index:40;background:rgba(30,25,50,.93);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.22);border-radius:12px;overflow:hidden;box-shadow:0 10px 30px #000a}
+.g-menu.show{display:block}.g-menu a{display:flex;gap:10px;padding:11px 14px;cursor:pointer;color:var(--t);font-size:14px}.g-menu a:hover{background:var(--c2)}
+/* Editor */
+.g-top{display:flex;align-items:center;gap:4px;padding:8px 10px}
+.g-ti{flex:1;min-width:0;background:none;border:0;border-bottom:2px solid transparent;outline:none;font-size:18px;padding:6px}.g-ti:focus{border-color:var(--a)}
+.g-tb{display:flex;flex-wrap:wrap;gap:3px;align-items:center;padding:4px 0 8px;margin-bottom:8px;border-bottom:1px solid var(--c2);position:relative}
+.g-t{background:none;border:0;border-radius:8px;min-width:36px;height:34px;cursor:pointer;color:var(--t)}.g-t:hover{background:var(--c2)}.g-t.on{background:color-mix(in srgb,var(--a) 30%,transparent)}
+.g-s{width:1px;height:20px;background:var(--c2);margin:0 4px}.g-vw{position:relative}.g-vw .g-menu{left:0;right:auto;min-width:150px}
+.g-off .g-t:not(#vb){opacity:.35;pointer-events:none}
+.g-sp{position:fixed;top:72px;right:0;bottom:0;width:min(320px,88%);transform:translateX(105%);transition:transform .3s;z-index:45;background:rgba(30,25,50,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-left:1px solid rgba(255,255,255,.22);overflow-y:auto}.g-sp.open{transform:none}
+.g-sh{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--c2);font-weight:600}
+.g-st{padding:14px 18px;cursor:pointer;display:flex;gap:10px;align-items:center;color:var(--m);border-bottom:1px solid var(--c2);user-select:none}.g-st i{font-size:12px;transition:.2s}.g-st.open i{transform:rotate(180deg)}
+.g-sc{display:none;padding:12px 18px}.g-sc.show{display:block}
+.g-ck{display:flex;gap:8px;align-items:center;color:var(--m);font-size:14px;margin-bottom:8px}
+.g-modal{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:16px}.g-modal.show{display:flex}
+.g-mb{width:min(720px,100%);max-height:85vh;overflow:auto;border-radius:16px;padding:20px;background:rgba(30,25,50,.94);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.22)}
+.g-mb img,.g-mb video,.ed img,.ed video{max-width:100%;border-radius:10px;display:block;margin:8px 0}
+</style>
+<script>
+/* ---------- helpers ---------- */
+const psave=quiet=>{try{localStorage.setItem(K,JSON.stringify(S));return 1}catch(e){if(!quiet)alert('Storage full: badi image/video save nahi hui');return 0}};
+const gclose=()=>document.querySelectorAll('.g-menu.show').forEach(m=>{m.classList.remove('show');const c=m.closest('.g-card');c&&c.classList.remove('op')});
+document.addEventListener('click',()=>{gclose();const s=q('sp');s&&s.classList.remove('open')});
+
+/* ---------- POSTS DASHBOARD ---------- */
+V.posts=(a,t='post')=>{
+  const A=S.posts.filter(p=>p.type==t),L=A.filter(p=>F=='all'||(F=='draft')==!!p.draft);
+  return `<div class="row"><select class="in" style="width:auto;margin:0" onchange="F=this.value;render()">${[['all','All'],['pub','Published'],['draft','Drafts']].map(o=>`<option value="${o[0]}" ${F==o[0]?'selected':''}>${o[1]} (${o[0]=='all'?A.length:A.filter(p=>(o[0]=='draft')==!!p.draft).length})</option>`).join('')}</select></div>`+
+  (L.map(p=>`<div class="card pc g-card" onclick="location.hash='#/edit/${p.id}'">
+    <div class="th">${esc((p.title||'?')[0])}</div>
+    <div class="pi"><b>${esc(p.title||'Untitled')}</b>
+      <small>${fmt(p.date)}<span class="g-b ${p.draft?'d':''}">${p.draft?'Draft':'Live'}</span>${(p.labels||'').split(',').map(x=>x.trim()).filter(Boolean).map(l=>`<span class="g-lb">${esc(l)}</span>`).join('')}</small>
+      <small>${t=='post'?ic('comments')+' '+cc(p.id)+' &nbsp; '+ic('stats')+' '+sum(p,()=>1):''}</small></div>
+    <div class="g-mw"><button class="ib" onclick="pmenu(event,this)">⋮</button>
+      <div class="g-menu">
+        <a onclick="pact(event,'${p.id}','del')">🗑️ Delete</a>
+        <a onclick="pact(event,'${p.id}','lab')">🏷️ Apply Label</a>
+        <a onclick="pact(event,'${p.id}','tog')">${p.draft?'🚀 Publish':'👁️‍🗨️ Unpublish'}</a>
+        <a onclick="pact(event,'${p.id}','view')">👁️ View</a>
+      </div></div></div>`).join('')||`<p class="mu" style="text-align:center;padding:40px 0">No ${t}s yet. Tap + to create one.</p>`)+
+  `<button class="fab" onclick="location.hash='#/edit/new-${t}'">${ic('plus')}</button>`};
+
+window.pmenu=(e,b)=>{e.stopPropagation();const m=b.nextElementSibling,was=m.classList.contains('show');gclose();if(!was){m.classList.add('show');b.closest('.g-card').classList.add('op')}};
+window.pact=(e,id,a)=>{e.stopPropagation();gclose();const p=S.posts.find(x=>x.id==id);if(!p)return;
+  if(a=='del'){if(!confirm('Delete this?'))return;S.posts=S.posts.filter(x=>x.id!=id);S.comments=S.comments.filter(c=>c.pid!=id);S.reading=S.reading.filter(r=>r!=id)}
+  else if(a=='lab'){const v=prompt('Labels (comma se alag):',p.labels||'');if(v===null)return;p.labels=v.split(',').map(x=>x.trim()).filter(Boolean).join(', ')}
+  else if(a=='tog'){if(p.draft)p.date=td();p.draft=p.draft?0:1}
+  else{location.hash='#/p/'+id;return}
+  psave();render()};
+
+/* ---------- EDITOR ---------- */
+V.edit=a=>{M=0;
+  E=S.posts.find(x=>x.id==a)||{id:'',type:a=='new-page'?'page':'post',title:'',html:'',labels:'',draft:1,views:{},date:td(),permalink:'',location:'',robots:'',cm:true,sh:true};
+  const T=(c,i,t)=>`<button class="g-t" title="${t}" onmousedown="event.preventDefault()" onclick="gx('${c}')"><i class="fa-solid fa-${i}"></i></button>`;
+  const G=(t,body,open)=>`<div class="g-st ${open?'open':''}" onclick="gtg(this)"><i class="fa-solid fa-chevron-down"></i> ${t}</div><div class="g-sc ${open?'show':''}">${body}</div>`;
+  return `<div class="card g-top"><button class="ib" onclick="location.hash='#/${E.type=='page'?'pages':'posts'}'" title="Back"><i class="fa-solid fa-arrow-left"></i></button>
+    <input id="ti" class="g-ti" placeholder="Title" value="${esc(E.title)}" oninput="gauto()">
+    <button class="ib" onclick="gprev()" title="Preview"><i class="fa-solid fa-eye"></i></button>
+    <button class="ib" onclick="gsp(event)" title="Post settings"><i class="fa-solid fa-gear"></i></button></div>
+  <div class="card">
+    <div class="g-tb" id="tb">
+      <div class="g-vw"><button class="g-t" id="vb" onclick="gvd(event)"><i class="fa-solid fa-pen"></i> <i class="fa-solid fa-caret-down" style="font-size:9px"></i></button>
+        <div class="g-menu" id="vdd"><a onclick="gmode(1,event)"><i class="fa-solid fa-code"></i> HTML view</a><a onclick="gmode(0,event)"><i class="fa-solid fa-pen"></i> Compose view</a></div></div>
+      <span class="g-s"></span>${T('undo','rotate-left','Undo')}${T('redo','rotate-right','Redo')}<span class="g-s"></span>
+      ${T('bold','bold','Bold')}${T('italic','italic','Italic')}${T('underline','underline','Underline')}<span class="g-s"></span>
+      ${T('insertUnorderedList','list-ul','Bullets')}${T('insertOrderedList','list-ol','Numbers')}<span class="g-s"></span>
+      <button class="g-t" onmousedown="event.preventDefault()" onclick="glink()" title="Link"><i class="fa-solid fa-link"></i></button>
+      <button class="g-t" onclick="q('fi').click()" title="Image"><i class="fa-solid fa-image"></i></button>
+      <button class="g-t" onclick="q('fv').click()" title="Video"><i class="fa-solid fa-video"></i></button>
+    </div>
+    <div id="ed" class="ed" contenteditable="true" oninput="gauto()">${E.html}</div>
+    <textarea id="hx" class="in" rows="14" hidden spellcheck="false" placeholder="Paste HTML or ad code here" oninput="gauto()"></textarea>
+    <small id="gs"></small>
+    <input type="file" id="fi" accept="image/*" hidden onchange="gfile(this,'img')"><input type="file" id="fv" accept="video/*" hidden onchange="gfile(this,'vid')">
+  </div>
+  <div class="row"><button class="chip" onclick="sv(1)">Save draft</button><span class="sp"></span><button class="btn" onclick="sv(0)">Publish</button></div>
+
+  <div class="g-sp" id="sp" onclick="event.stopPropagation()">
+    <div class="g-sh"><span>Post settings</span><i class="fa-solid fa-xmark" style="cursor:pointer;padding:4px" onclick="q('sp').classList.remove('open')"></i></div>
+    ${G('Labels',`<input class="in" id="lb" placeholder="Separate labels by commas" value="${esc(E.labels)}" oninput="gauto()">`,1)}
+    ${G('Published on',`<small>${fmt(E.date||td())}${E.draft?' (draft)':''}</small>`)}
+    ${G('Permalink',`<input class="in" id="pl" placeholder="Auto-generated permalink" value="${esc(E.permalink)}" oninput="gauto()">`)}
+    ${G('Location',`<input class="in" id="lc" placeholder="Add location" value="${esc(E.location)}" oninput="gauto()">`)}
+    ${G('Options',`<label class="g-ck"><input type="checkbox" id="cm" ${E.cm!==false?'checked':''} onchange="gauto()"> Allow reader comments</label><label class="g-ck"><input type="checkbox" id="sh" ${E.sh!==false?'checked':''} onchange="gauto()"> Show sharing buttons</label>`)}
+    ${G('Custom Robot Tags',`<input class="in" id="rb" placeholder="e.g., noindex, nofollow" value="${esc(E.robots)}" oninput="gauto()"><small>Add meta tags for search engines.</small>`)}
+  </div>
+  <div class="g-modal" id="pvm" onclick="if(event.target==this)this.classList.remove('show')"><div class="g-mb"><button class="ib" style="float:right" onclick="q('pvm').classList.remove('show')"><i class="fa-solid fa-xmark"></i></button><h2 id="pvt"></h2><div id="pvb" style="margin-top:10px"></div></div></div>`};
+
+const gcollect=()=>{if(!q('ed'))return;E.title=q('ti').value.trim();E.html=M?q('hx').value:nz(q('ed').innerHTML);E.labels=q('lb').value;E.permalink=q('pl').value;E.location=q('lc').value;E.robots=q('rb').value;E.cm=q('cm').checked;E.sh=q('sh').checked};
+let gT;window.gauto=()=>{if(!E||!E.id||!S.posts.includes(E))return;clearTimeout(gT);gT=setTimeout(()=>{if(!q('ed'))return;gcollect();if(psave(1)&&q('gs'))q('gs').textContent='Saved ✓'},700)};
+window.gtg=el=>{el.classList.toggle('open');el.nextElementSibling.classList.toggle('show')};
+window.gsp=e=>{e.stopPropagation();q('sp').classList.toggle('open')};
+window.gvd=e=>{e.stopPropagation();q('vdd').classList.toggle('show')};
+window.gx=c=>{if(M)return;q('ed').focus();document.execCommand(c,false,null);gauto()};
+window.glink=()=>{if(M)return;let u=prompt('URL daalo (https://...):');if(!u)return;if(!/^(https?:|mailto:)/i.test(u))u='https://'+u;q('ed').focus();document.execCommand('createLink',false,u);gauto()};
+window.gfile=(i,k)=>{const f=i.files[0];i.value='';if(!f||M)return;const r=new FileReader();
+  r.onload=e=>{q('ed').focus();document.execCommand(k=='img'?'insertImage':'insertHTML',false,k=='img'?e.target.result:`<br><video controls src="${e.target.result}"></video><br>`);gauto()};r.readAsDataURL(f)};
+window.gmode=(m,e)=>{e&&e.stopPropagation();q('vdd').classList.remove('show');if(m==M)return;
+  if(m)q('hx').value=nz(q('ed').innerHTML);else q('ed').innerHTML=q('hx').value;
+  M=m;q('ed').hidden=!!m;q('hx').hidden=!m;q('tb').classList.toggle('g-off',!!m);q('vb').classList.toggle('on',!!m);
+  q('vb').innerHTML=`<i class="fa-solid fa-${m?'code':'pen'}"></i> <i class="fa-solid fa-caret-down" style="font-size:9px"></i>`;gauto()};
+window.gprev=()=>{q('pvt').textContent=q('ti').value||'Untitled';q('pvb').innerHTML=M?q('hx').value:nz(q('ed').innerHTML);q('pvm').classList.add('show')};
+window.sv=d=>{if(!q('ti').value.trim())return alert('Pehle title daalo');gcollect();
+  if(!E.id){E.id=Date.now().toString(36);E.views={};S.posts.unshift(E)}
+  if(!d&&E.draft)E.date=td();E.draft=d?1:0;
+  if(!psave())return;location.hash=E.type=='page'?'#/pages':'#/posts'};
+
+render();
+</script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="addon.js"></script></body></html>
